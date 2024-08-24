@@ -24,6 +24,7 @@
     "react-dom": "^18",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
+    "uppy": "^4.2.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
