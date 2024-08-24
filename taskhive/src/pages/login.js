@@ -52,7 +52,12 @@ export default function LoginPage() {
             className={`bg-gradient-to-b from-purple-900 via-purple-800 to-black flex min-h-screen flex-col items-center justify-evenly p-24 `}
         >
             <form onSubmit={handleSubmit}>
-                <Input type="text" name="name" placeholder="Username" required />
+                <Input
+                    type="text"
+                    name="name"
+                    placeholder="Username"
+                    required
+                />
                 <Input
                     type="password"
                     name="password"
