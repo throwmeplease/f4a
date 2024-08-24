@@ -72,105 +72,106 @@ function getRepos() {
         var response = { ok: true, body: "no" };
         response.ok = true;
 
+        console.log(response)
         if (response.ok) {
             console.log(response);
-            return projects_old;
-            return response.body;
+            return response.body.repos;
         }
     } catch (e) {}
-    return [{ value: "sorry you have no repos", label: "meh" }];
+    return [
+        { value: "sorry you have no repos", label: "meh" },
+        { value: "error", label: "chal chod" },
+    ];
 }
 
 function GetButton() {
-    return(
-    <>
-        <Dialog>
-            <DialogTrigger>Open</DialogTrigger>
-            <DialogContent>
-                <DialogHeader>
-                    <DialogTitle>Are you absolutely sure?</DialogTitle>
-                    <DialogDescription>
-                        This action cannot be undone. This will permanently
-                        delete your account and remove your data from our
-                        servers.
-                    </DialogDescription>
-                </DialogHeader>
-            </DialogContent>
-        </Dialog>
-    </>);
-}
-function Projects(){
-
     return (
-        <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger asChild>
-                <Button
-                    variant="outline"
-                    role="combobox"
-                    aria-expanded={open}
-                    className="w-[200px] justify-between"
-                >
-                    {value
-                        ? projects.find((project) => framework.value === value)
-                              ?.label
-                        : "Select project..."}
-                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-[200px] p-0">
-                <Command>
-                    <CommandInput placeholder="Search project..." />
-                    <CommandList>
-                        <CommandEmpty>No project found.</CommandEmpty>
-                        <CommandGroup>
-                            {projects.map((project) => (
-                                <CommandItem
-                                    key={project.value}
-                                    value={project.value}
-                                    onSelect={(currentValue) => {
-                                        setValue(
-                                            currentValue === value
-                                                ? ""
-                                                : currentValue
-                                        );
-                                        setOpen(false);
-                                    }}
-                                >
-                                    <Check
-                                        className={cn(
-                                            "mr-2 h-4 w-4",
-                                            value === project.value
-                                                ? "opacity-100"
-                                                : "opacity-0"
-                                        )}
-                                    />
-                                    {project.label}
-                                </CommandItem>
-                            ))}
-                        </CommandGroup>
-                    </CommandList>
-                </Command>
-            </PopoverContent>
-        </Popover>
+        <>
+            <Dialog>
+                <DialogTrigger>Open</DialogTrigger>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Are you absolutely sure?</DialogTitle>
+                        <DialogDescription>
+                            This action cannot be undone. This will permanently
+                            delete your account and remove your data from our
+                            servers.
+                        </DialogDescription>
+                    </DialogHeader>
+                </DialogContent>
+            </Dialog>
+        </>
     );
-
 }
+// function Projects({ open, setOpen }, {value, setValue}, {projects}) {
+//  return (
 
 export default function ComboboxDemo() {
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState("");
-
+    // const [projects, setProjects] = React.useState(getRepos());
     const projects = getRepos();
 
     return (
-
-<main
-            className={`bg-gradient-to-b from-purple-900 via-purple-800 to-black flex min-h-screen flex-col items-center justify-evenly p-24 `}
+        <main
+            className={`bg-white flex min-h-screen flex-col items-center justify-evenly p-24 `}
         >
-    <div>
-        </div>
-        <div>
-        </div>
+            <div>
+                <Popover open={open} onOpenChange={setOpen}>
+                    <PopoverTrigger asChild>
+                        <Button
+                            variant="outline"
+                            role="combobox"
+                            aria-expanded={open}
+                            className="w-[200px] justify-between"
+                        >
+                            {value
+                                ? projects.find(
+                                      (project) => framework.value === value
+                                  )?.label
+                                : "Select project..."}
+                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[200px] p-0">
+                        <Command>
+                            <CommandInput placeholder="Search project..." />
+                            <CommandList>
+                                <CommandEmpty>No project found.</CommandEmpty>
+                                <CommandGroup>
+                                    {projects.map((project) => (
+                                        <CommandItem
+                                            key={project.value}
+                                            value={project.value}
+                                            onSelect={(currentValue) => {
+                                                setValue(
+                                                    currentValue === value
+                                                        ? ""
+                                                        : currentValue
+                                                );
+                                                setOpen(false);
+                                            }}
+                                        >
+                                            <Check
+                                                className={cn(
+                                                    "mr-2 h-4 w-4",
+                                                    value === project.value
+                                                        ? "opacity-100"
+                                                        : "opacity-0"
+                                                )}
+                                            />
+                                            {project.label}
+                                        </CommandItem>
+                                    ))}
+                                </CommandGroup>
+                            </CommandList>
+                        </Command>
+                    </PopoverContent>
+                </Popover>
+            </div>
+            <div>
+                <GetButton />
+            </div>
         </main>
     );
 }
