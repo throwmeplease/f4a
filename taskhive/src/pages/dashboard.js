@@ -53,7 +53,7 @@ function getRepos() {
         if (value === ""){ throw nahi;}
     const name = value
     const response = fetch("/api/repos", {
-         method: "GET",
+         method: "POST",
          headers: {"Content-Type": "application/json" },
          body: JSON.stringify({ "name": name}),
      });
