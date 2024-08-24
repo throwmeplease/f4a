@@ -1,5 +1,5 @@
 import { FormEvent } from "react";
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { Button } from "@/components/ui/button";
 import { useState } from 'react';
 {
@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input";
 }
 
 export default function LoginPage() {
+    const router = useRouter();
     var [isWrong, setWrong] = useState(false);
 
     async function handleSubmit(event) {
@@ -36,7 +37,8 @@ export default function LoginPage() {
         console.log(JSON.stringify({ name, password }));
         console.log(response);
         if (response.ok) {
-            redirect("/dashboard");
+            localStorage.setItem("Name", name);
+            router.push({pathname: "/dashboard"});
         } else {
             setWrong(true)
         }

@@ -40,30 +40,41 @@ const projects_old = [
      label: "Astro",
    },
  ]
-function getRepos(name) {
-    return projects_old;
+function getRepos() {
+    // return projects_old;
     // const name = fetch("/api/repos")
     // const response = fetch("/api/repos", {
     //     method: "GET",
     //     headers: {"Content-Type": "application/json" },
     //     body: JSON.stringify({ "name": name}),
     // });
-    var response = { ok: true, body: "no" };
+    try {
+        let value = localStorage.getItem("Name") || "";
+        if (value === ""){ throw nahi;}
+    const name = value
+    const response = fetch("/api/repos", {
+         method: "GET",
+         headers: {"Content-Type": "application/json" },
+         body: JSON.stringify({ "name": name}),
+     });
+
+        var response = { ok: true, body: "no" };
     response.ok = true;
 
     if (response.ok) {
+        console.log(response);
+        return projects_old;
         return response.body;
-    } else {
-        return "sorry you have no repos";
-    }
+    }}catch(e){}
+        return [{value: "sorry you have no repos", label: "meh"}];
+    
 }
 
 export default function ComboboxDemo() {
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState("");
-    const [name, setName] = React.useState("xyz");
 
-    const projects = getRepos(name);
+    const projects = getRepos();
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
