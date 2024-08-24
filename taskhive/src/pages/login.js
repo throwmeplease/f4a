@@ -30,17 +30,19 @@ export default function LoginPage() {
         event.preventDefault();
 
         const formData = new FormData(event.currentTarget);
-        const email = formData.get("name");
+        const name = formData.get("name");
         const password = formData.get("password");
 
         const response = await fetch("/api/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password }),
+            body: JSON.stringify({ name, password }),
         });
-
+		console.log(JSON.stringify({ name, password }))
+		console.log(response);
         if (response.ok) {
-            router.push("/profile");
+					
+            //router.push("/profile");
         } else {
             // Handle errors
         }
