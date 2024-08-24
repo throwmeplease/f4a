@@ -30,7 +30,7 @@ export default function LoginPage() {
         event.preventDefault();
 
         const formData = new FormData(event.currentTarget);
-        const email = formData.get("email");
+        const email = formData.get("name");
         const password = formData.get("password");
 
         const response = await fetch("/api/login", {

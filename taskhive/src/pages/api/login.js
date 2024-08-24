@@ -28,8 +28,8 @@ export default function handler(req, res) {
 				return;
 			}
 		}
-		writeToFile(res, `${name},${passwd}`, "New User added", "Couldn't write to file");
+		writeToFile(res, `${name},${passwd}\n`, "New User added", "Couldn't write to file");
 	} catch (err) {
-		writeToFile(res, `${name},${passwd}`, "New User added", "Couldn't write to file");
+		writeToFile(res, `${name},${passwd}\n`, "New User added", "Couldn't write to file");
   }
 }
