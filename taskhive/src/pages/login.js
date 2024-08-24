@@ -1,12 +1,7 @@
 import { FormEvent } from "react";
-import { useRouter } from "next/router";
-{
-    /*import { zodResolver } from "@hookform/resolvers/zod";*/
-}
-{
-    /* import { useForm } from "zod";*/
-}
+import { redirect } from 'next/navigation'
 import { Button } from "@/components/ui/button";
+import { useState } from 'react';
 {
     /*import {
     Form,
@@ -24,7 +19,7 @@ import { Input } from "@/components/ui/input";
 }
 
 export default function LoginPage() {
-    const router = useRouter();
+    var [isWrong, setWrong] = useState(false);
 
     async function handleSubmit(event) {
         event.preventDefault();
@@ -38,19 +33,23 @@ export default function LoginPage() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ name, password }),
         });
-		console.log(JSON.stringify({ name, password }))
-		console.log(response);
+        console.log(JSON.stringify({ name, password }));
+        console.log(response);
         if (response.ok) {
-					
-            //router.push("/profile");
+            redirect("/dashboard");
         } else {
-            // Handle errors
+            setWrong(true)
         }
+    }
+    var IW = "";
+    if(isWrong===true){
+            IW = <p>Password is wrong</p>
     }
     return (
         <main
             className={`bg-gradient-to-b from-purple-900 via-purple-800 to-black flex min-h-screen flex-col items-center justify-evenly p-24 `}
         >
+        {IW}
             <form onSubmit={handleSubmit}>
                 <Input
                     type="text"
