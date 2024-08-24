@@ -49,7 +49,9 @@ export default function LoginPage() {
         <main
             className={`bg-gradient-to-b from-purple-900 via-purple-800 to-black flex min-h-screen flex-col items-center justify-evenly p-24 `}
         >
+        <p className={'text-9xl'}>
         {IW}
+        </p>
             <form onSubmit={handleSubmit}>
                 <Input
                     type="text"
