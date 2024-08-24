@@ -18,28 +18,37 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover";
 
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
+
 const projects_old = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-     value: "nuxt.js",
-    label: "Nuxt.js",
-   },
-   {
-     value: "remix",
-     label: "Remix",
-   },
-   {
-     value: "astro",
-     label: "Astro",
-   },
- ]
+    {
+        value: "next.js",
+        label: "Next.js",
+    },
+    {
+        value: "sveltekit",
+        label: "SvelteKit",
+    },
+    {
+        value: "nuxt.js",
+        label: "Nuxt.js",
+    },
+    {
+        value: "remix",
+        label: "Remix",
+    },
+    {
+        value: "astro",
+        label: "Astro",
+    },
+];
 function getRepos() {
     // return projects_old;
     // const name = fetch("/api/repos")
@@ -50,31 +59,47 @@ function getRepos() {
     // });
     try {
         let value = localStorage.getItem("Name") || "";
-        if (value === ""){ throw nahi;}
-    const name = value
-    const response = fetch("/api/repos", {
-         method: "POST",
-         headers: {"Content-Type": "application/json" },
-         body: JSON.stringify({ "name": name}),
-     });
+        if (value === "") {
+            throw nahi;
+        }
+        const name = value;
+        const response = fetch("/api/repos", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name: name }),
+        });
 
         var response = { ok: true, body: "no" };
-    response.ok = true;
+        response.ok = true;
 
-    if (response.ok) {
-        console.log(response);
-        return projects_old;
-        return response.body;
-    }}catch(e){}
-        return [{value: "sorry you have no repos", label: "meh"}];
-    
+        if (response.ok) {
+            console.log(response);
+            return projects_old;
+            return response.body;
+        }
+    } catch (e) {}
+    return [{ value: "sorry you have no repos", label: "meh" }];
 }
 
-export default function ComboboxDemo() {
-    const [open, setOpen] = React.useState(false);
-    const [value, setValue] = React.useState("");
-
-    const projects = getRepos();
+function GetButton() {
+    return(
+    <>
+        <Dialog>
+            <DialogTrigger>Open</DialogTrigger>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Are you absolutely sure?</DialogTitle>
+                    <DialogDescription>
+                        This action cannot be undone. This will permanently
+                        delete your account and remove your data from our
+                        servers.
+                    </DialogDescription>
+                </DialogHeader>
+            </DialogContent>
+        </Dialog>
+    </>);
+}
+function Projects(){
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
@@ -127,5 +152,25 @@ export default function ComboboxDemo() {
                 </Command>
             </PopoverContent>
         </Popover>
+    );
+
+}
+
+export default function ComboboxDemo() {
+    const [open, setOpen] = React.useState(false);
+    const [value, setValue] = React.useState("");
+
+    const projects = getRepos();
+
+    return (
+
+<main
+            className={`bg-gradient-to-b from-purple-900 via-purple-800 to-black flex min-h-screen flex-col items-center justify-evenly p-24 `}
+        >
+    <div>
+        </div>
+        <div>
+        </div>
+        </main>
     );
 }
