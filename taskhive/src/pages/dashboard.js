@@ -1,5 +1,9 @@
 "use client";
 
+import {Uppy} from '@uppy/core';
+import {DragDrop} from '@uppy/drag-drop';
+import '@uppy/core/dist/style.min.css';
+import '@uppy/drag-drop/dist/style.min.css';
 import * as React from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -49,7 +53,7 @@ const projects_old = [
         label: "Astro",
     },
 ];
-function getRepos() {
+async function getRepos() {
     // return projects_old;
     // const name = fetch("/api/repos")
     // const response = fetch("/api/repos", {
@@ -63,19 +67,17 @@ function getRepos() {
             throw nahi;
         }
         const name = value;
-        const response = fetch("/api/repos", {
+        const response = await fetch("/api/repos", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ name: name }),
         });
-
-        var response = { ok: true, body: "no" };
-        response.ok = true;
-
-        console.log(response)
         if (response.ok) {
-            console.log(response);
-            return response.body.repos;
+            const json = await response.json();
+            if (response.status === 200) {
+                console.log(json.repos);
+                return json.repos;
+            }
         }
     } catch (e) {}
     return [
@@ -111,10 +113,15 @@ export default function ComboboxDemo() {
     const [value, setValue] = React.useState("");
     // const [projects, setProjects] = React.useState(getRepos());
     const projects = getRepos();
+    if (!projects.map) {
+        projects.map = () => console.log("heher")
+    }
 
     return (
         <main
-            className={`bg-white flex min-h-screen flex-col items-center justify-evenly p-24 `}
+        className={'flex min-h-screen flex-row items-center justify-between p-42'}
+        ><div
+            className={`bg-white flex min-h-screen flex-col items-center justify-evenly p-32 `}
         >
             <div>
                 <Popover open={open} onOpenChange={setOpen}>
@@ -127,7 +134,7 @@ export default function ComboboxDemo() {
                         >
                             {value
                                 ? projects.find(
-                                      (project) => framework.value === value
+                                      (project) => project.value === value
                                   )?.label
                                 : "Select project..."}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -172,6 +179,10 @@ export default function ComboboxDemo() {
             <div>
                 <GetButton />
             </div>
+        </div>
+        <div className={'p-48'}>
+        yooooo
+        </div>
         </main>
     );
 }
