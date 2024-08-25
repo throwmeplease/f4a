@@ -49,7 +49,7 @@ export default function LoginPage() {
     }
     return (
         <main
-            className={`bg-gradient-to-b text-2xl from-purple-900 via-purple-800 to-black flex min-h-screen flex-col items-center justify-evenly p-24 `}
+            className={`bg-gradient-to-b text-2xl from-purple-900 via-purple-800 to-black min-h-screen flex flex-col items-center justify-evenly p-24 `}
         >
             {IW}
             <form onSubmit={handleSubmit}>
@@ -58,20 +58,19 @@ export default function LoginPage() {
                     name="name"
                     placeholder="Username"
                     required
-                    className={"m-5 p-2"}
+                    className={"m-5 p-2 min-w-72 max-w-72"}
                 />
                 <Input
                     type="password"
                     name="password"
                     placeholder="Password"
                     required
-                    className={"m-20 p-2"}
+                    className={"my-20 mx-5 p-2 min-w-72 max-w-72"}
                 />
                 {/*<input type="file" id="file_input" webkitdirectory="" directory="" /> */}
                 <Button
                     className={
-                        "flex flex-col min-w-screen items-center justify-evenly p-20"
-                    }
+                        "min-w-screen p-2 min-w-72 max-w-72 mx-5" }
                     type="submit"
                 >
                     Login
