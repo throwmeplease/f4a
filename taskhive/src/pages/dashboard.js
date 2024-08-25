@@ -31,6 +31,9 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 
+
+const button_css = 'mx-5 my-30 min-w-48 max-w-48'; 
+
 const projects_old = [
     {
         value: "next.js",
@@ -109,7 +112,7 @@ function EditProject() {
         <>
             <Dialog>
                 <DialogTrigger asChild>
-                    <Button variant="outline">Edit Project</Button>
+                    <Button className={button_css}>Edit Project</Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>
@@ -155,7 +158,9 @@ function EditProject() {
 function DeleteProject() {
     return (
         <Dialog>
-            <DialogTrigger><Button>Delete</Button></DialogTrigger>
+            <DialogTrigger>
+                <Button className={button_css}>Delete</Button>
+            </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Are you absolutely sure?</DialogTitle>
@@ -174,7 +179,9 @@ function DeleteProject() {
 function NewProject() {
     return (
         <Dialog>
-            <DialogTrigger><Button>New Project</Button></DialogTrigger>
+            <DialogTrigger>
+                <Button className={button_css}>New Project</Button>
+            </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
                     <DialogTitle>New Project</DialogTitle>
@@ -224,7 +231,7 @@ export default function ComboboxDemo() {
     // if (!projects.map) {
     //     projects = projects_old
     // }
-    
+
     //async function handleSubmit(event) {
     //    event.preventDefault();
     //
@@ -239,8 +246,6 @@ export default function ComboboxDemo() {
     //    });
     //    console.log(response);
     //}
-
-
 
     return (
         <main
@@ -306,7 +311,11 @@ export default function ComboboxDemo() {
                         </PopoverContent>
                     </Popover>
                 </div>
-                <div className={'flex flex-col items-center justify-between p-28'}>
+                <div
+                    className={
+                        "flex flex-col items-center justify-between p-28"
+                    }
+                >
                     <EditProject />
                     <NewProject />
                     <DeleteProject />
@@ -314,14 +323,27 @@ export default function ComboboxDemo() {
             </div>
             <div
                 className={
-                    "text-black flex min-h-screen flex-col items-center justify-between p-48"
+                    "w-max text-black flex min-h-screen flex-col items-center justify-between p-48"
                 }
             >
-
-        <form method="post" enctype="multipart/form-data" action="api/fileupload">
-                <input id="filelelo" type="file" accept=".zip" name="filetoupload" /> 
-                <Button id="filelelo" type="submit" > Login </Button>
-        </form> {/*    <Home />  */}
+                <form
+                    method="post"
+                    enctype="multipart/form-data"
+                    action="api/fileupload"
+                >
+                    <Input
+                        id="filelelo"
+                        type="file"
+                        accept=".zip"
+                        name="filetoupload"
+        className={'min-w-48 max-w-48'}
+                    />
+                    <Button className={'min-w-48 max-w-48'} id="filelelo" type="submit">
+                        {" "}
+                        Submit{" "}
+                    </Button>
+                </form>{" "}
+                {/*    <Home />  */}
             </div>
         </main>
     );

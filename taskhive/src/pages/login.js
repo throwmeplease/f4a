@@ -45,11 +45,11 @@ export default function LoginPage() {
     }
     var IW = "";
     if (isWrong === true) {
-        IW = <p className={"text-sm"}>Password is wrong</p>;
+        IW = <p className={"text-green-400 text-sm"}>Password is wrong</p>;
     }
     return (
         <main
-            className={`bg-gradient-to-b text-2xl from-purple-900 via-purple-800 to-black min-h-screen flex flex-col items-center justify-evenly p-24 `}
+            className={`bg-gradient-to-b text-3xl from-purple-900 via-purple-800 to-black min-h-screen flex flex-col items-center justify-center p-24 `}
         >
             {IW}
             <form onSubmit={handleSubmit}>
