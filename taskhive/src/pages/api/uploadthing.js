@@ -1,10 +1,10 @@
 import { createRouteHandler } from "uploadthing/next-legacy";
- 
-import { ourFileRouter } from "/src/server/uploadthing";
- 
+
+import { ourFileRouter } from "../../server/uploadthing.js";
+
 export default createRouteHandler({
-  router: ourFileRouter,
- 
-  // Apply an (optional) custom config:
-  // config: { ... },
+	router: ourFileRouter,
+
+	// Apply an (optional) custom config:
+	// config: { ... },
 });
