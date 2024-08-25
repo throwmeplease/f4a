@@ -1,13 +1,12 @@
 "use client";
 
-import {Uppy} from '@uppy/core';
-import {DragDrop} from '@uppy/drag-drop';
-import '@uppy/core/dist/style.min.css';
-import '@uppy/drag-drop/dist/style.min.css';
+import { UploadButton } from "/src/utils/uploadthing";
 import * as React from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import {
     Command,
     CommandEmpty,
@@ -26,6 +25,7 @@ import {
     Dialog,
     DialogContent,
     DialogDescription,
+    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
@@ -53,6 +53,24 @@ const projects_old = [
         label: "Astro",
     },
 ];
+
+function Home() {
+    return (
+        <UploadButton
+            endpoint="imageUploader"
+            onClientUploadComplete={(res) => {
+                // Do something with the response
+                console.log("Files: ", res);
+                alert("Upload Completed");
+            }}
+            onUploadError={(error) => {
+                // Do something with the error.
+                alert(`ERROR! ${error.message}`);
+            }}
+        />
+    );
+}
+
 async function getRepos() {
     // return projects_old;
     // const name = fetch("/api/repos")
@@ -86,103 +104,204 @@ async function getRepos() {
     ];
 }
 
-function GetButton() {
+function EditProject() {
     return (
         <>
             <Dialog>
-                <DialogTrigger>Open</DialogTrigger>
-                <DialogContent>
+                <DialogTrigger asChild>
+                    <Button variant="outline">Edit Project</Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>
-                        <DialogTitle>Are you absolutely sure?</DialogTitle>
+                        <DialogTitle>Edit Project</DialogTitle>
                         <DialogDescription>
-                            This action cannot be undone. This will permanently
-                            delete your account and remove your data from our
-                            servers.
+                            Make changes to your Project here. Click save when
+                            you're done.
                         </DialogDescription>
                     </DialogHeader>
+                    <div className="grid gap-4 py-4">
+                        <div className="grid grid-cols-4 items-center gap-4">
+                            <Label htmlFor="name" className="text-right">
+                                Name
+                            </Label>
+                            <Input
+                                id="name"
+                                defaultValue="Group 1 PPT"
+                                className="col-span-3"
+                            />
+                        </div>
+                        <div className="grid grid-cols-4 items-center gap-4">
+                            <Label htmlFor="text" className="text-right">
+                                Username
+                            </Label>
+                            <Input
+                                id="description"
+                                defaultValue="group 1's social sciences power point presentation"
+                                className="col-span-3 row-span-4"
+                            />
+                        </div>
+                    </div>
+                    <DialogFooter>
+                        <Button type="submit">Save changes</Button>
+                    </DialogFooter>
                 </DialogContent>
-            </Dialog>
+            </Dialog>{" "}
         </>
     );
 }
 // function Projects({ open, setOpen }, {value, setValue}, {projects}) {
 //  return (
 
+function DeleteProject() {
+    return (
+        <Dialog>
+            <DialogTrigger><Button>Delete</Button></DialogTrigger>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Are you absolutely sure?</DialogTitle>
+                    <DialogDescription>
+                        This action cannot be undone. This will permanently
+                        delete your Project and remove it's data from our
+                        servers.
+                    </DialogDescription>
+                    // add button
+                </DialogHeader>
+            </DialogContent>
+        </Dialog>
+    );
+}
+
+function NewProject() {
+    return (
+        <Dialog>
+            <DialogTrigger><Button>New Project</Button></DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                    <DialogTitle>New Project</DialogTitle>
+                    <DialogDescription>
+                        Enter the details of your Project. Click save when
+                        you're done.
+                    </DialogDescription>
+                </DialogHeader>
+                <div className="grid gap-4 py-4">
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="name" className="text-right">
+                            Name
+                        </Label>
+                        <Input
+                            id="name"
+                            defaultValue="Group 1 PPT"
+                            className="col-span-3"
+                        />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="text" className="text-right">
+                            Username
+                        </Label>
+                        <Input
+                            id="description"
+                            defaultValue="group 1's social sciences power point presentation"
+                            className="col-span-3 row-span-4"
+                        />
+                    </div>
+                </div>
+                <DialogFooter>
+                    <Button type="submit">Save changes</Button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
+    );
+}
+
 export default function ComboboxDemo() {
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState("");
     // const [projects, setProjects] = React.useState(getRepos());
-    const projects = getRepos();
-    if (!projects.map) {
-        projects.map = () => console.log("heher")
-    }
+    var projects = React.useEffect(() => {
+        return getRepos();
+    });
+    console.log(projects);
+    // if (!projects.map) {
+    //     projects = projects_old
+    // }
 
     return (
         <main
-        className={'flex min-h-screen flex-row items-center justify-between p-42'}
-        ><div
-            className={`bg-white flex min-h-screen flex-col items-center justify-evenly p-32 `}
+            className={
+                "bg-gradient-to-b from-purple-900 via-purple-800 to-black flex min-h-screen flex-row items-center justify-between p-42"
+            }
         >
-            <div>
-                <Popover open={open} onOpenChange={setOpen}>
-                    <PopoverTrigger asChild>
-                        <Button
-                            variant="outline"
-                            role="combobox"
-                            aria-expanded={open}
-                            className="w-[200px] justify-between"
-                        >
-                            {value
-                                ? projects.find(
-                                      (project) => project.value === value
-                                  )?.label
-                                : "Select project..."}
-                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                        </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-[200px] p-0">
-                        <Command>
-                            <CommandInput placeholder="Search project..." />
-                            <CommandList>
-                                <CommandEmpty>No project found.</CommandEmpty>
-                                <CommandGroup>
-                                    {projects.map((project) => (
-                                        <CommandItem
-                                            key={project.value}
-                                            value={project.value}
-                                            onSelect={(currentValue) => {
-                                                setValue(
-                                                    currentValue === value
-                                                        ? ""
-                                                        : currentValue
-                                                );
-                                                setOpen(false);
-                                            }}
-                                        >
-                                            <Check
-                                                className={cn(
-                                                    "mr-2 h-4 w-4",
-                                                    value === project.value
-                                                        ? "opacity-100"
-                                                        : "opacity-0"
-                                                )}
-                                            />
-                                            {project.label}
-                                        </CommandItem>
-                                    ))}
-                                </CommandGroup>
-                            </CommandList>
-                        </Command>
-                    </PopoverContent>
-                </Popover>
+            <div
+                className={`bg-white flex min-h-screen flex-col items-center justify-evenly p-32 `}
+            >
+                <div>
+                    <Popover open={open} onOpenChange={setOpen}>
+                        <PopoverTrigger asChild>
+                            <Button
+                                variant="outline"
+                                role="combobox"
+                                aria-expanded={open}
+                                className="w-[200px] justify-between"
+                            >
+                                {value
+                                    ? projects.find(
+                                          (project) => project.value === value
+                                      )?.label
+                                    : "Select project..."}
+                                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-[200px] p-0">
+                            <Command>
+                                <CommandInput placeholder="Search project..." />
+                                <CommandList>
+                                    <CommandEmpty>
+                                        No project found.
+                                    </CommandEmpty>
+                                    <CommandGroup>
+                                        {projects?.map((project) => (
+                                            <CommandItem
+                                                key={project.value}
+                                                value={project.value}
+                                                onSelect={(currentValue) => {
+                                                    setValue(
+                                                        currentValue === value
+                                                            ? ""
+                                                            : currentValue
+                                                    );
+                                                    setOpen(false);
+                                                }}
+                                            >
+                                                <Check
+                                                    className={cn(
+                                                        "mr-2 h-4 w-4",
+                                                        value === project.value
+                                                            ? "opacity-100"
+                                                            : "opacity-0"
+                                                    )}
+                                                />
+                                                {project.label}
+                                            </CommandItem>
+                                        ))}
+                                    </CommandGroup>
+                                </CommandList>
+                            </Command>
+                        </PopoverContent>
+                    </Popover>
+                </div>
+                <div className={'flex flex-col items-center justify-between p-28'}>
+                    <EditProject />
+                    <NewProject />
+                    <DeleteProject />
+                </div>
             </div>
-            <div>
-                <GetButton />
+            <div
+                className={
+                    "text-black flex min-h-screen flex-col items-center justify-between p-48"
+                }
+            >
+                <Home />
             </div>
-        </div>
-        <div className={'p-48'}>
-        yooooo
-        </div>
         </main>
     );
 }
