@@ -224,6 +224,30 @@ export default function ComboboxDemo() {
     // if (!projects.map) {
     //     projects = projects_old
     // }
+    
+    async function handleSubmit(event) {
+        event.preventDefault();
+
+        const formData = new FormData(event.currentTarget);
+        const name = formData.get("name");
+        const password = formData.get("password");
+
+        const response = await fetch("/api/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, password }),
+        });
+        console.log(JSON.stringify({ name, password }));
+        console.log(response);
+        if (response.ok) {
+            localStorage.setItem("Name", name);
+            router.push({ pathname: "/dashboard" });
+        } else {
+            setWrong(true);
+        }
+    }
+
+
 
     return (
         <main
@@ -300,7 +324,11 @@ export default function ComboboxDemo() {
                     "text-black flex min-h-screen flex-col items-center justify-between p-48"
                 }
             >
-                <Home />
+
+        <form onSubmit={handleSubmit}>
+                <Input id="filelelo" type="file" accept=".zip" /> 
+                <Button id="filelelo" type="submit" > Login </Button>
+        </form> {/*    <Home />  */}
             </div>
         </main>
     );
