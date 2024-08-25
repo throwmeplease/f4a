@@ -230,11 +230,12 @@ export default function ComboboxDemo() {
 
         const formData = new FormData(event.currentTarget);
         const name = formData.get("file");
+        const value = localStorage.getItem("Name") || "";
 
         const response = await fetch("/api/upload", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ "zip": name }),
+            body: JSON.stringify({ "name": value, "zip": name }),
         });
         console.log(response);
     }
