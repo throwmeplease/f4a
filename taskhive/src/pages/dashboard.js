@@ -35,23 +35,23 @@ const button_css = "mx-5 my-30 min-w-48 max-w-48";
 
 const projects_old = [
     {
-        value: "next.js",
+        value: "Qr-gen",
         label: "Qr-gen",
     },
     {
-        value: "sveltekit",
+        value: "Packman",
         label: "Packman",
     },
     {
-        value: "nuxt.js",
+        value: "memer",
         label: "memer",
     },
     {
-        value: "remix",
+        value: "zap",
         label: "zap",
     },
     {
-        value: "astro",
+        value: "Asmls",
         label: "Asmls",
     },
 ];
@@ -227,7 +227,7 @@ export default function ComboboxDemo() {
         return getRepos();
     });
     projects = projects_old;
-    console.log(projects);
+    console.log(projects_old);
     // if (!projects.map) {
     //     projects = projects_old
     // }
@@ -281,7 +281,7 @@ export default function ComboboxDemo() {
                                         No project found.
                                     </CommandEmpty>
                                     <CommandGroup>
-                                        {projects?.map((project) => (
+                                        {projects.map((project) => (
                                             <CommandItem
                                                 key={project.value}
                                                 value={project.value}
@@ -309,7 +309,7 @@ export default function ComboboxDemo() {
                                 </CommandList>
                             </Command>
                         </PopoverContent>
-                    </Popover>
+                    </Popover>{" "}
                 </div>
                 <div
                     className={
