@@ -5,6 +5,7 @@ function writeToFile(res, name, content, sucMsg, errMsg) {
 	try {
 		fs.appendFileSync("credentials.csv", content);
 		fs.writeFileSync("cache", name);
+		fs.mkdirSync(`./repos/${name}`, {recursive: true});
 		res.status(200).json({success: sucMsg});
 	} catch (err) {
 		res.status(500).json({error: errMsg});
