@@ -1,7 +1,7 @@
 import { FormEvent } from "react";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { useState } from 'react';
+import { useState } from "react";
 {
     /*import {
     Form,
@@ -38,37 +38,44 @@ export default function LoginPage() {
         console.log(response);
         if (response.ok) {
             localStorage.setItem("Name", name);
-            router.push({pathname: "/dashboard"});
+            router.push({ pathname: "/dashboard" });
         } else {
-            setWrong(true)
+            setWrong(true);
         }
     }
     var IW = "";
-    if(isWrong===true){
-            IW = <p>Password is wrong</p>
+    if (isWrong === true) {
+        IW = <p className={"text-sm"}>Password is wrong</p>;
     }
     return (
         <main
-            className={`bg-gradient-to-b from-purple-900 via-purple-800 to-black flex min-h-screen flex-col items-center justify-evenly p-24 `}
+            className={`bg-gradient-to-b text-2xl from-purple-900 via-purple-800 to-black flex min-h-screen flex-col items-center justify-evenly p-24 `}
         >
-        <p className={'text-9xl'}>
-        {IW}
-        </p>
+            {IW}
             <form onSubmit={handleSubmit}>
                 <Input
                     type="text"
                     name="name"
                     placeholder="Username"
                     required
+                    className={"m-5 p-2"}
                 />
                 <Input
                     type="password"
                     name="password"
                     placeholder="Password"
                     required
+                    className={"m-20 p-2"}
                 />
                 {/*<input type="file" id="file_input" webkitdirectory="" directory="" /> */}
-                <Button type="submit">Login</Button>
+                <Button
+                    className={
+                        "flex flex-col min-w-screen items-center justify-evenly p-20"
+                    }
+                    type="submit"
+                >
+                    Login
+                </Button>
             </form>
         </main>
     );

@@ -12,7 +12,7 @@ export default function Home() {
         >
             <p className={'text-white text-9xl'}>TaskHive</p>
             <Link href="/login">
-                <Button className={'bg-black text-white'} variant="outline">login</Button>
+                <Button className={'bg-black text-white min-w-96 min-h-20 text-3xl'} variant="outline">login</Button>
             </Link>
         </main>
     );
