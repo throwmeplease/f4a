@@ -31,29 +31,28 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 
-
-const button_css = 'mx-5 my-30 min-w-48 max-w-48'; 
+const button_css = "mx-5 my-30 min-w-48 max-w-48";
 
 const projects_old = [
     {
         value: "next.js",
-        label: "Next.js",
+        label: "Qr-gen",
     },
     {
         value: "sveltekit",
-        label: "SvelteKit",
+        label: "Packman",
     },
     {
         value: "nuxt.js",
-        label: "Nuxt.js",
+        label: "memer",
     },
     {
         value: "remix",
-        label: "Remix",
+        label: "zap",
     },
     {
         value: "astro",
-        label: "Astro",
+        label: "Asmls",
     },
 ];
 
@@ -135,7 +134,7 @@ function EditProject() {
                         </div>
                         <div className="grid grid-cols-4 items-center gap-4">
                             <Label htmlFor="text" className="text-right">
-                                Username
+                                description{" "}
                             </Label>
                             <Input
                                 id="description"
@@ -169,7 +168,7 @@ function DeleteProject() {
                         delete your Project and remove it's data from our
                         servers.
                     </DialogDescription>
-                    // add button
+                    <Button> Yes, Delete the Project </Button>
                 </DialogHeader>
             </DialogContent>
         </Dialog>
@@ -203,7 +202,7 @@ function NewProject() {
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="text" className="text-right">
-                            Username
+                            Description
                         </Label>
                         <Input
                             id="description"
@@ -227,6 +226,7 @@ export default function ComboboxDemo() {
     var projects = React.useEffect(() => {
         return getRepos();
     });
+    projects = projects_old;
     console.log(projects);
     // if (!projects.map) {
     //     projects = projects_old
@@ -316,9 +316,9 @@ export default function ComboboxDemo() {
                         "flex flex-col items-center justify-between p-28"
                     }
                 >
-                    <EditProject />
-                    <NewProject />
-                    <DeleteProject />
+                    <EditProject className={"my-15"} />
+                    <NewProject className={"my-15"} />
+                    <DeleteProject className={"my-15"} />
                 </div>
             </div>
             <div
@@ -336,9 +336,13 @@ export default function ComboboxDemo() {
                         type="file"
                         accept=".zip"
                         name="filetoupload"
-        className={'min-w-48 max-w-48'}
+                        className={"min-w-48 max-w-48"}
                     />
-                    <Button className={'min-w-48 max-w-48'} id="filelelo" type="submit">
+                    <Button
+                        className={"min-w-48 max-w-48"}
+                        id="filelelo"
+                        type="submit"
+                    >
                         {" "}
                         Submit{" "}
                     </Button>
