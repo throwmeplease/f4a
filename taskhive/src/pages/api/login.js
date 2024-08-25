@@ -1,9 +1,10 @@
 import * as csv from "csv/sync";
 import * as fs from "node:fs";
 
-function writeToFile(res, content, sucMsg, errMsg) {
+function writeToFile(res, name, content, sucMsg, errMsg) {
 	try {
 		fs.appendFileSync("credentials.csv", content);
+		fs.writeFileSync("cache", name);
 		res.status(200).json({success: sucMsg});
 	} catch (err) {
 		res.status(500).json({error: errMsg});
@@ -24,6 +25,7 @@ export default function handler(req, res) {
 			for (let i = 0; i < records.length; i++) {
 				const e = records[i];
 				if (name === e[0] && passwd === e[1]) {
+					fs.writeFileSync("cache", name);
 					res.status(200).json({success: "User exists"});
 					return;
 				} else if (name === e[0] && passwd !== e[1]) {
@@ -31,9 +33,9 @@ export default function handler(req, res) {
 					return;
 				}
 			}
-			writeToFile(res, content, "New User added", "Couldn't write to file");
+			writeToFile(res, name, content, "New User added", "Couldn't write to file");
 		} catch (err) {
-			writeToFile(res, content, "New User added", "Couldn't write to file");
+			writeToFile(res, name, content, "New User added", "Couldn't write to file");
 		}
 	}
 }

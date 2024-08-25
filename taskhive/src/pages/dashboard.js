@@ -225,20 +225,20 @@ export default function ComboboxDemo() {
     //     projects = projects_old
     // }
     
-    async function handleSubmit(event) {
-        event.preventDefault();
-
-        const formData = new FormData(event.currentTarget);
-        const name = formData.get("file");
-        const value = localStorage.getItem("Name") || "";
-
-        const response = await fetch("/api/upload", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ "name": value, "zip": name }),
-        });
-        console.log(response);
-    }
+    //async function handleSubmit(event) {
+    //    event.preventDefault();
+    //
+    //    const formData = new FormData(event.currentTarget);
+    //    //const name = formData.get("file");
+    //    const value = localStorage.getItem("Name") || "";
+    //
+    //    const response = await fetch("/api/upload", {
+    //        method: "POST",
+    //        headers: { "Content-Type": "application/zip" },
+    //        body: formData,
+    //    });
+    //    console.log(response);
+    //}
 
 
 
@@ -318,8 +318,8 @@ export default function ComboboxDemo() {
                 }
             >
 
-        <form onSubmit={handleSubmit}>
-                <Input id="filelelo" type="file" accept=".zip" /> 
+        <form method="post" enctype="multipart/form-data" action="api/fileupload">
+                <input id="filelelo" type="file" accept=".zip" name="filetoupload" /> 
                 <Button id="filelelo" type="submit" > Login </Button>
         </form> {/*    <Home />  */}
             </div>
