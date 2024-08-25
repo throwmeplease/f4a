@@ -229,22 +229,14 @@ export default function ComboboxDemo() {
         event.preventDefault();
 
         const formData = new FormData(event.currentTarget);
-        const name = formData.get("name");
-        const password = formData.get("password");
+        const name = formData.get("file");
 
-        const response = await fetch("/api/login", {
+        const response = await fetch("/api/upload", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name, password }),
+            body: JSON.stringify({ "zip": name }),
         });
-        console.log(JSON.stringify({ name, password }));
         console.log(response);
-        if (response.ok) {
-            localStorage.setItem("Name", name);
-            router.push({ pathname: "/dashboard" });
-        } else {
-            setWrong(true);
-        }
     }
 
 
