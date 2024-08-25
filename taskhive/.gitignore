@@ -28,6 +28,13 @@ yarn-error.log*
 # local env files
 .env*.local
 
+cache
+credentials.csv
+repos/
+
+
+
+
 # vercel
 .vercel
 
