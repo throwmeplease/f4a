@@ -56,6 +56,65 @@ const projects_old = [
     },
 ];
 
+export function ComboboxDemo() {
+    const [open, setOpen] = React.useState(false);
+    const [value, setValue] = React.useState("");
+
+    return (
+        <Popover open={open} onOpenChange={setOpen}>
+            <PopoverTrigger asChild>
+                <Button
+                    variant="outline"
+                    role="combobox"
+                    aria-expanded={open}
+                    className="w-[200px] justify-between"
+                >
+                    {value
+                        ? projects_old.find(
+                              (proj) => framework.value === value
+                          )?.label
+                        : "Select proj..."}
+                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-[200px] p-0">
+                <Command>
+                    <CommandInput placeholder="Search proj..." />
+                    <CommandList>
+                        <CommandEmpty>No proj found.</CommandEmpty>
+                        <CommandGroup>
+                            {projects_old.map((proj) => (
+                                <CommandItem
+                                    key={proj.value}
+                                    value={proj.value}
+                                    onSelect={(currentValue) => {
+                                        setValue(
+                                            currentValue === value
+                                                ? ""
+                                                : currentValue
+                                        );
+                                        setOpen(false);
+                                    }}
+                                >
+                                    <Check
+                                        className={cn(
+                                            "mr-2 h-4 w-4",
+                                            value === proj.value
+                                                ? "opacity-100"
+                                                : "opacity-0"
+                                        )}
+                                    />
+                                    {proj.label}
+                                </CommandItem>
+                            ))}
+                        </CommandGroup>
+                    </CommandList>
+                </Command>
+            </PopoverContent>
+        </Popover>
+    );
+}
+
 function Home() {
     return (
         <UploadButton
@@ -219,7 +278,7 @@ function NewProject() {
     );
 }
 
-export default function ComboboxDemo() {
+export default function Dashboard() {
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState("");
     // const [projects, setProjects] = React.useState(getRepos());
@@ -257,7 +316,9 @@ export default function ComboboxDemo() {
                 className={`bg-white flex min-h-screen flex-col items-center justify-evenly p-32 `}
             >
                 <div>
-                    <Popover open={open} onOpenChange={setOpen}>
+        < ComboboxDemo />
+        
+                    {/*<Popover open={open} onOpenChange={setOpen}>
                         <PopoverTrigger asChild>
                             <Button
                                 variant="outline"
@@ -309,7 +370,7 @@ export default function ComboboxDemo() {
                                 </CommandList>
                             </Command>
                         </PopoverContent>
-                    </Popover>{" "}
+                    </Popover>{" "}*/}
                 </div>
                 <div
                     className={
