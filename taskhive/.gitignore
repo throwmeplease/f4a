@@ -32,9 +32,6 @@ cache
 credentials.csv
 repos/
 
-
-
-
 # vercel
 .vercel
 

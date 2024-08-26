@@ -1,6 +1,6 @@
 "use client";
 
-import { UploadButton } from "/src/utils/uploadthing";
+//import { UploadButton } from "/src/utils/uploadthing";
 import * as React from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -33,32 +33,47 @@ import {
 
 const button_css = "mx-5 my-30 min-w-48 max-w-48";
 
-const projects_old = [
-    {
-        value: "Qr-gen",
-        label: "Qr-gen",
-    },
-    {
-        value: "Packman",
-        label: "Packman",
-    },
-    {
-        value: "memer",
-        label: "memer",
-    },
-    {
-        value: "zap",
-        label: "zap",
-    },
-    {
-        value: "Asmls",
-        label: "Asmls",
-    },
-];
+//const projects_old = [
+//    {
+//        value: "Qr-gen",
+//        label: "Qr-gen",
+//    },
+//    {
+//        value: "Packman",
+//        label: "Packman",
+//    },
+//    {
+//        value: "memer",
+//        label: "memer",
+//    },
+//    {
+//        value: "zap",
+//        label: "zap",
+//    },
+//    {
+//        value: "Asmls",
+//        label: "Asmls",
+//    },
+//];
 
 export function ComboboxDemo() {
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState("");
+		const [projects, setProjects] = React.useState(null);
+
+		React.useEffect(() => {
+        let value = localStorage.getItem("Name") || "";
+        if (value === "") {
+            return;
+        }
+        const name = value;
+        fetch("/api/repos", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name: name }),
+        }).then((res) => res.json())
+        .then((data) => setProjects(data["repos"]))
+		}, [])
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
@@ -70,7 +85,7 @@ export function ComboboxDemo() {
                     className="w-[200px] justify-between"
                 >
                     {value
-                        ? projects_old.find(
+                        ? projects.find(
                               (proj) => framework.value === value
                           )?.label
                         : "Select proj..."}
@@ -83,7 +98,7 @@ export function ComboboxDemo() {
                     <CommandList>
                         <CommandEmpty>No proj found.</CommandEmpty>
                         <CommandGroup>
-                            {projects_old.map((proj) => (
+                            {(projects && projects.map)? projects.map((proj) => (
                                 <CommandItem
                                     key={proj.value}
                                     value={proj.value}
@@ -106,7 +121,7 @@ export function ComboboxDemo() {
                                     />
                                     {proj.label}
                                 </CommandItem>
-                            ))}
+                            )): null}
                         </CommandGroup>
                     </CommandList>
                 </Command>
@@ -115,55 +130,22 @@ export function ComboboxDemo() {
     );
 }
 
-function Home() {
-    return (
-        <UploadButton
-            endpoint="imageUploader"
-            onClientUploadComplete={(res) => {
-                // Do something with the response
-                console.log("Files: ", res);
-                alert("Upload Completed");
-            }}
-            onUploadError={(error) => {
-                // Do something with the error.
-                alert(`ERROR! ${error.message}`);
-            }}
-        />
-    );
-}
-
-async function getRepos() {
-    // return projects_old;
-    // const name = fetch("/api/repos")
-    // const response = fetch("/api/repos", {
-    //     method: "GET",
-    //     headers: {"Content-Type": "application/json" },
-    //     body: JSON.stringify({ "name": name}),
-    // });
-    try {
-        let value = localStorage.getItem("Name") || "";
-        if (value === "") {
-            throw nahi;
-        }
-        const name = value;
-        const response = await fetch("/api/repos", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name: name }),
-        });
-        if (response.ok) {
-            const json = await response.json();
-            if (response.status === 200) {
-                console.log(json.repos);
-                return json.repos;
-            }
-        }
-    } catch (e) {}
-    return [
-        { value: "sorry you have no repos", label: "meh" },
-        { value: "error", label: "chal chod" },
-    ];
-}
+//function Home() {
+//    return (
+//        <UploadButton
+//            endpoint="imageUploader"
+//            onClientUploadComplete={(res) => {
+//                // Do something with the response
+//                console.log("Files: ", res);
+//                alert("Upload Completed");
+//            }}
+//            onUploadError={(error) => {
+//                // Do something with the error.
+//                alert(`ERROR! ${error.message}`);
+//            }}
+//        />
+//    );
+//}
 
 function EditProject() {
     return (
@@ -279,17 +261,8 @@ function NewProject() {
 }
 
 export default function Dashboard() {
-    const [open, setOpen] = React.useState(false);
-    const [value, setValue] = React.useState("");
-    // const [projects, setProjects] = React.useState(getRepos());
-    var projects = React.useEffect(() => {
-        return getRepos();
-    });
-    projects = projects_old;
-    console.log(projects_old);
-    // if (!projects.map) {
-    //     projects = projects_old
-    // }
+    //const [open, setOpen] = React.useState(false);
+    //const [value, setValue] = React.useState("");
 
     //async function handleSubmit(event) {
     //    event.preventDefault();

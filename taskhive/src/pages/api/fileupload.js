@@ -12,7 +12,7 @@ export default function handler(req, res) {
 	var form = new formidable.IncomingForm();
 	form.uploadDir = `./repos/${name}`;
 	form.keepExtensions = true;
-	console.log("Main chalunga shayad")
+	//console.log("Main chalunga shayad")
 	form.parse(req, function (err, fields, files) {
 		var oldpath = files.filetoupload[0].filepath;
 		var newpath = `./repos/${name}/` + files.filetoupload[0].originalFilename;

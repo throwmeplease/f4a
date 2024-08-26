@@ -34,8 +34,8 @@ export default function LoginPage() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ name, password }),
         });
-        console.log(JSON.stringify({ name, password }));
-        console.log(response);
+        //console.log(JSON.stringify({ name, password }));
+        //console.log(response);
         if (response.ok) {
             localStorage.setItem("Name", name);
             router.push({ pathname: "/dashboard" });
